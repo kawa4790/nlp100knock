@@ -1,4 +1,16 @@
 # 06.集合
+def N_gram(n, text):
+    word = text.split(" ")
+    char = text.replace(" ", "")
+    word_list = []
+    char_list = []
+    
+    for i in range(len(word)):
+        word_list.append(word[i:n+i])
+    for i in range(len(char)):
+        char_list.append(char[i:n+i])
+    return word_list, char_list
+
 a = "paraparaparadise"
 b = "paragraph"
 _, a_bi = N_gram(2, a)
