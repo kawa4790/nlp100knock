@@ -13,6 +13,7 @@ feature_weights = pd.DataFrame({
 
 top_features = feature_weights.sort_values(by='Weight', ascending=False).head(20)
 bottom_features = feature_weights.sort_values(by='Weight', ascending=True).head(20)
+<<<<<<< HEAD
 
 def show_feature_table(df, title):
     print(f"\n{title}")
@@ -20,3 +21,13 @@ def show_feature_table(df, title):
 
 show_feature_table(top_features, "重みの高い特徴量トップ20")
 show_feature_table(bottom_features, "重みの低い特徴量トップ20")
+=======
+
+def show_feature_table(df, title):
+    print(f"\n{title}")
+    print(df.to_string(index=False))
+
+show_feature_table(top_features, "重みの高い特徴量トップ20")
+show_feature_table(bottom_features, "重みの低い特徴量トップ20")
+
+>>>>>>> 6b9653981d5236e5f5befc16e6c3dde9773f2979
