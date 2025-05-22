@@ -1,18 +1,22 @@
 # 68.特徴量の重みの確認
-
 import numpy as np
+import pandas as pd
 
+# 特徴量名と重みを取得
 feature_names = vec.get_feature_names_out()
-
 weights = model.coef_[0]
 
-top20= np.argsort(weights)[-20:][::-1]  
-bottom20 = np.argsort(weights)[:20]      
+feature_weights = pd.DataFrame({
+    'Feature': feature_names,
+    'Weight': weights
+})
 
-print("重みの高い特徴量トップ20:")
-for i in top20_idx:
-    print(f"{feature_names[i]:<20} {weights[i]:.4f}")
+top_features = feature_weights.sort_values(by='Weight', ascending=False).head(20)
+bottom_features = feature_weights.sort_values(by='Weight', ascending=True).head(20)
 
-print("\n重みの低い特徴量トップ20:")
-for i in bottom20_idx:
-    print(f"{feature_names[i]:<20} {weights[i]:.4f}")
+def show_feature_table(df, title):
+    print(f"\n{title}")
+    print(df.to_string(index=False))
+
+show_feature_table(top_features, "重みの高い特徴量トップ20")
+show_feature_table(bottom_features, "重みの低い特徴量トップ20")
