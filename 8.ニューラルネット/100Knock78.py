@@ -1,5 +1,4 @@
 # 78.単語埋め込みのファインチューニング
-# 78.単語埋め込みのファインチューニング
 
 import torch
 import torch.nn as nn
