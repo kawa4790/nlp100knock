@@ -1,5 +1,4 @@
 # 77.GPU上での学習
-# 77.GPU上での学習
 from torch.utils.data import DataLoader
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
