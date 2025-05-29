@@ -1,5 +1,4 @@
 # 75.パディング
-# 75.パディング
 import torch
 from torch.nn.utils.rnn import pad_sequence
 
