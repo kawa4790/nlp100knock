@@ -1,5 +1,4 @@
 # 76.ミニバッチ学習
-# 76.ミニバッチ学習
 from torch.utils.data import DataLoader
 
 batch_size = 32
