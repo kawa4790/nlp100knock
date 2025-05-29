@@ -1,5 +1,4 @@
 # 79.アーキテクチャの変更
-# 79.アーキテクチャの変更
 from torch.utils.data import DataLoader
 import torch
 import torch.nn as nn
