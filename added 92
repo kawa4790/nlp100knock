@@ -1,0 +1,29 @@
+# 92.予測されたテキストの確率の計算
+model_name = "gpt2"
+tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+model = GPT2LMHeadModel.from_pretrained(model_name)
+model.eval()
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
+
+text = "The movie was full of"
+max_new_tokens = 10
+
+input_ids = tokenizer.encode(text, return_tensors="pt").to(device)
+print(f"{text} に続くテキスト")
+with torch.no_grad():
+    for _ in range(max_new_tokens):
+        outputs = model(input_ids)
+        logits = outputs.logits
+
+        next_token_logits = logits[0, -1, :] 
+        probs = F.softmax(next_token_logits, dim=-1) 
+        top_probs, top_indices = torch.topk(probs, 1)
+
+        token = tokenizer.decode(top_indices[0].item())
+        prob = top_probs[0].item()
+        print(f"{token:<15}  尤度: {prob:.6f}")
+        input_ids = torch.cat([input_ids,top_indices[0].unsqueeze(0).unsqueeze(0)], dim=1)
+
+print({tokenizer.decode(input_ids[0])})
