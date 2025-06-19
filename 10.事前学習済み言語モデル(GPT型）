@@ -1,0 +1,28 @@
+# 90. 次単語予測
+import torch
+from transformers import GPT2Tokenizer, GPT2LMHeadModel
+import torch.nn.functional as F
+
+model_name = "gpt2"
+tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+model = GPT2LMHeadModel.from_pretrained(model_name)
+model.eval()
+
+text = "The movie was full of"
+inputs = tokenizer(text, return_tensors="pt", add_special_tokens=False)
+
+tokens = tokenizer.convert_ids_to_tokens(inputs["input_ids"][0])
+print("トークン列:", tokens)
+
+with torch.no_grad():
+    outputs = model(**inputs)
+    logits = outputs.logits[:, -1, :]  
+    probs = F.softmax(logits, dim=-1)
+
+top_k = 10
+top_probs, top_indices = torch.topk(probs, top_k, dim=-1)
+
+print("上位10語及びその確率:")
+for i, (index, prob) in enumerate(zip(top_indices[0], top_probs[0])):
+    token = tokenizer.decode(index.item()).strip()
+    print(f"{i+1:2d}. {token:<15} 尤度: {prob.item():.6f}")
